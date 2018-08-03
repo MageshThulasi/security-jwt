@@ -1,0 +1,4 @@
+rootProject.name = 'batch-security'
+//if (file("../batch-common").exists()) {
+//    includeBuild "../batch-common"
+//}

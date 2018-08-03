@@ -1,0 +1,113 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'project-report'
+apply plugin: 'build-dashboard'
+apply plugin: 'jacoco'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+apply plugin: 'io.spring.dependency-management'
+
+bootJar {
+  mainClassName = 'com.lexisnexis.batch.security.BatchSecurityApplication'
+  baseName = 'batch-security'
+  archiveName = 'batch-security.jar'
+}
+
+repositories {
+    mavenLocal()
+    maven { url "${nexusUrl}/content/repositories/public" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$SPRING_CLOUD_VERSION"
+    }
+}
+
+buildscript {
+    repositories {
+        maven { url "${nexusUrl}/content/repositories/public" }
+        maven { url "http://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: "${findProperty('SPRING_BOOT_VERSION') ?: SPRING_BOOT_VERSION}"
+    }
+}
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-oauth2'
+}
+
+/**compileJava {
+    options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Xlint:-serial" << "-Werror"
+}**/
+
+task showGradleRepo {
+    doLast {
+        configurations.compile.each { println it }
+    }
+}
+
+/*
+jacoco {
+    toolVersion = dependencyManagement.importedProperties['jacoco.version']
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled = true
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        failOnViolation = false
+        rule {
+            limit {
+                value	= 'COVEREDRATIO'
+                minimum	= 0.9000
+                counter	= 'INSTRUCTION'
+            }
+        }
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+findbugs {
+    excludeFilter = file("findbugs-filter.xml")
+    ignoreFailures = false
+    sourceSets = [sourceSets.main]
+    reportsDir = file("$project.buildDir/reports/findbugs")
+    effort = "max"
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+tasks.withType(Pmd) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+pmd {
+  toolVersion = dependencyManagement.importedProperties['pmd.version']
+  ruleSetFiles=files("pmdruleset.xml")
+    ignoreFailures = false
+    consoleOutput = true
+    sourceSets = [sourceSets.main]
+    reportsDir = file("$project.buildDir/reports/pmd")
+}
+*/

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS, UTC}[${HOSTNAME}][RBB][SECURITY][%X{INCOMING_BATCH_ID}][%X{SOURCE_DATA_TYPE}][%X{FILE_NAME}][%X{SOURCE_NODE}][%X{FILE_FORMAT}][%X{ACCOUNT}][%X{OUTGOING_BATCH_ID}][%X{DESTINATION_DATA_TYPE}][%X{DESTINATION}][%X{TXN_ID}][%thread] %level %logger{36} - %msg %n" />
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>${PATTERN}</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+    </appender>
+
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${user.home}/logs/batch-security.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>90</maxHistory> <!-- keep 90 days' worth of history -->
+        </rollingPolicy>
+        <encoder>
+            <Pattern>${PATTERN}</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+    </appender>
+
+    <appender name="milestoneFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${user.home}/logs/batch-security-milestone.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>90</maxHistory> <!-- keep 90 days' worth of history -->
+        </rollingPolicy>
+        <encoder>
+            <Pattern>${PATTERN}</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+    </appender>
+
+
+    <appender name="kafkaConfigFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${user.home}/logs/batch-security-kafka.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>90</maxHistory> <!-- keep 90 days' worth of history -->
+            <maxFileSize>500MB</maxFileSize> <!-- each file should be at most 500MB -->
+            <totalSizeCap>5GB</totalSizeCap> <!-- At most 5GB of kafka logs, overall-->
+        </rollingPolicy>
+        <encoder>
+            <Pattern>${PATTERN}</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+    </appender>
+
+    <root>
+        <appender-ref ref="consoleAppender" />
+        <appender-ref ref="fileAppender" />
+    </root>
+
+    <logger name="log.milestone" additivity="false">
+        <appender-ref ref="milestoneFileAppender"/>
+    </logger>
+	<logger name="org.springframework.kafka" additivity="false">
+        <appender-ref ref="kafkaConfigFileAppender" />
+    </logger>
+	<logger name="org.apache.kafka" additivity="false">
+        <appender-ref ref="kafkaConfigFileAppender" />
+    </logger>
+    <logger name="log.kafkaConfig" additivity="false">
+        <appender-ref ref="kafkaConfigFileAppender"/>
+    </logger>
+
+</configuration>

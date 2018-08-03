@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<FindBugsFilter>
+    <Match>
+    	<Bug pattern="UMAC_UNCALLABLE_METHOD_OF_ANONYMOUS_CLASS" />
+    </Match>
+    <Match>
+      <Class name="org.springframework.cloud.contract.verifier.tests.NodeTest" />
+    </Match>
+    <Match>
+      <Class name="com.lexisnexis.batch.config.outgoing.OutgoingFileGroup" />
+      <Bug pattern="EI_EXPOSE_REP" />
+    </Match>
+    <Match>
+      <Class name="com.lexisnexis.batch.config.outgoing.OutgoingFileGroup" />
+      <Bug pattern="EI_EXPOSE_REP2" />
+    </Match>
+    <Match>
+      <Class name="com.lexisnexis.batch.domain.OutgoingBatchFile" />
+      <Bug pattern="EI_EXPOSE_REP" />
+    </Match>
+    <Match>
+      <Class name="com.lexisnexis.batch.domain.OutgoingBatchFile" />
+      <Bug pattern="EI_EXPOSE_REP2" />
+    </Match>
+    <Match>
+        <Class name="com.lexisnexis.batch.domain.outgoing.BatchUnitType" />
+        <Bug pattern="EI_EXPOSE_REP" />
+    </Match>
+    <Match>
+        <Class name="com.lexisnexis.batch.domain.outgoing.BatchUnitType" />
+        <Bug pattern="EI_EXPOSE_REP2" />
+    </Match>
+    <Match>
+        <Bug pattern="NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE" />
+    </Match>
+</FindBugsFilter>
