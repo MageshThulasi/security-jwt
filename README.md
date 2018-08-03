@@ -1,4 +1,4 @@
-# Batch Security
+# Security with JWT
 
 [![build status](https://gitlab.ins.risk.regn.net/batch/batch-security/badges/master/build.svg)](https://gitlab.ins.risk.regn.net/batch/batch-security/commits/master)
 [![coverage report](https://gitlab.ins.risk.regn.net/batch/batch-security/badges/master/coverage.svg)](https://batch.pages.gitlab.ins.risk.regn.net/batch-security/buildDashboard/index.html)
