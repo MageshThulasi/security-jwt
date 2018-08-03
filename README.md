@@ -11,7 +11,7 @@ Use Java's keytool to produce asymmetric key pair and use it to sign the convert
 
 ```
 # To generate the keystore (for batch-security microservice)
-keytool -genkeypair -alias batchkeys -keyalg RSA -dname "CN=LexisNexis, L=Alpharetta, S=Alpharetta, C=US" -keypass changeme -keystore batchkeys.jks -storepass changeme
+keytool -genkeypair -alias batchkeys -keyalg RSA -dname "CN=Company, L=Alpharetta, S=Alpharetta, C=US" -keypass changeme -keystore batchkeys.jks -storepass changeme
 
 # To display the public key and certificate (for client microservices)
 keytool -list -rfc --keystore batchkeys.jks | openssl x509 -inform pem -pubkey
